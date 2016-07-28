@@ -14,7 +14,8 @@ var srcPath = {
     html: './src/*.html',
     js: './src/js/*.js',
     jsModule:'./src/js/modules/*.js',
-    less: './src/less/*',
+    less: './src/less/*.less',
+    css: './src/css/*.css',
     images: './src/images/*'
 }
 var distPath = {
@@ -76,6 +77,34 @@ gulp.task('less', function() {
                 message: 'less task completed'
             }))
     })
+//css任务
+gulp.task('css', function() {
+    return gulp.src(srcPath.css)
+        .pipe(plugins.logger({
+            before: 'css Starting...',
+            after: 'css complete...'
+        }))
+        .pipe(plugins.concat('xdd.css'))
+        .pipe(plugins.changed('dist'))
+
+        //保存未压缩文件到我们指定的目录下面
+        .pipe(gulp.dest(distPath.css))
+
+        //.pipe(rev.manifest())
+        //给文件添加后缀
+        .pipe(plugins.rename({
+            suffix: 'min'
+        }))
+        //压缩样式文件
+        .pipe(plugins.minifyCss())
+        .pipe(plugins.changed('dist'))
+        /*.pipe(plugins.rev())*/
+        //保存压缩文件到我们指定的目录下面
+        .pipe(gulp.dest(distPath.cssMin))
+        .pipe(plugins.notify({
+            message: 'css task completed'
+        }))
+})
     //js任务
 gulp.task('scripts', function() {
         return gulp.src(srcPath.js)
@@ -134,8 +163,12 @@ gulp.task('watch', function() {
             gulp.run('fileinclude');
         });
         //监听less任务
-    gulp.watch(srcPath.less, function() {
+   /* gulp.watch(srcPath.less, function() {
             gulp.run('less');
+        });*/
+    //监听css任务
+    gulp.watch(srcPath.css, function() {
+            gulp.run('css');
         });
         //监听scriptts任务
     gulp.watch(srcPath.js,function() {
@@ -146,4 +179,4 @@ gulp.task('watch', function() {
         gulp.run('jsModules');
     })
 })
-gulp.task('default', ['fileinclude','less','scripts','jsModules','server', 'watch']);
+gulp.task('default', ['fileinclude','css','scripts','jsModules','server', 'watch']);

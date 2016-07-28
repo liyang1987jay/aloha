@@ -1,1 +1,1 @@
-require(["common/config"],function(o){window.URL={mainUrl:o.ROOT_PATH,checkUrl:o.API_PATH+"sys/login/tologin",checkCodeUrl:o.API_PATH+"sys/code",logoutUrl:o.API_PATH+"sys/login/logout"},window.C=o,require(["modules/login"])});
+require(["common/config"],function(o){window.URL={mainUrl:o.ROOT_PATH,loginUrl:o.API_PATH+"sys/login/tologin",checkCodeUrl:o.API_PATH+"sys/code",logoutUrl:o.API_PATH+"sys/login/logout"},window.C=o,require(["modules/login"])});

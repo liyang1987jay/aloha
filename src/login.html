@@ -1,38 +1,48 @@
 @@include('./inc/header.html',{"title":"登录"})
-<link rel="stylesheet" href="./css/login.css">
 <div class="login-layout">
     <div class="top">
         <h5>校东东电商平台<em></em></h5>
         <h2>系统管理中心</h2>
+        <div class="error">
+        </div>
     </div>
     <form method="post" id="form_login">
         <div class="lock-holder">
-            <div class="form-group pull-left input-username">
+            <div class="form-group fl input-username">
                 <label>账号</label>
                 <input name="user_name" id="user_name" autocomplete="off" type="text" class="input-text" placeholder="请输入账号">
             </div>
-            <i class="fa fa-ellipsis-h dot-left"></i> <i class="fa fa-ellipsis-h dot-right"></i>
-            <div class="form-group pull-right input-password-box">
+            <i class="fa fa-ellipsis-h dot-left"></i>
+            <i class="fa fa-ellipsis-h dot-right"></i>
+            <div class="form-group fr input-password-box">
                 <label>密码</label>
-                <input name="password" id="password" class="input-text" autocomplete="off" type="password" placeholder="请输入密码" >
+                <input name="password" id="password" class="input-text" autocomplete="off" type="password" placeholder="请输入密码">
             </div>
         </div>
         <div class="avatar"><img src="./images/login/admin.png" alt=""></div>
-        <div class="submit"> <span>
-      <div class="code" style="display: block;">
-        <div class="arrow"></div>
-        <div class="code-img"><img src="http://b2b2c.shopnctest.com/tesa/shopnc/index.php?act=seccode&op=makecode&admin=1&nchash=374bd9bd" name="codeimage" id="codeimage" border="0">" name="codeimage" id="codeimage" border="0"></div>
-        <a href="javascript:;" id="hide" class="close" title="关闭"><i></i></a><a href="javascript:;" class="change" title="看不清,点击更换验证码"><i></i></a> </div>
-      <input name="captcha" type="text" required="" class="input-code" id="captcha" placeholder="输入验证码">
-      </span> <span>
-      <input name="nchash" type="hidden" value="374bd9bd">
-      <input name="" class="input-button btn-submit" type="button" value="登录">
-      </span> </div>
+        <div class="submit">
+            <span>
+              <div class="code">
+                    <div class="arrow"></div>
+                    <div class="code-img"><img src="http://b2b2c.shopnctest.com/tesa/shopnc/index.php?act=seccode&op=makecode&admin=1&nchash=374bd9bd" name="codeimage" id="codeimage" border="0">" name="codeimage" id="codeimage" border="0"></div>
+                    <a href="javascript:;" id="hide" class="close" title="关闭">
+                        <i></i>
+                    </a>
+                    <a href="javascript:;" class="change" title="看不清,点击更换验证码">
+                        <i></i>
+                    </a>
+                </div>
+              <input name="captcha" type="text" required="" class="input-code" id="captcha" placeholder="输入验证码">
+          </span> 
+          <span>
+            <input name="" class="input-button btn-submit" type="button" value="登录">
+          </span> 
+        </div>
         <div class="submit2"></div>
     </form>
     <div class="bottom">
         <h5>Powered by <span class="vol"><font class="o">ALOHA</font></span></h5>
-        <h6 title="山东安合信达电子科技有限责任公司">© 2012-2016 <a href="http://www.sdaloha.net/" target="_blank">山东安合信达电子科技有限责任公司</a></h6>
+        <h6 title="山东安合信达电子科技有限公司">© 2012-2016 <a href="http://www.sdaloha.com/" target="_blank">山东安合信达电子科技有限公司</a></h6>
     </div>
 </div>
 @@include('./inc/footer.html')

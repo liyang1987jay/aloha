@@ -1,7 +1,7 @@
 /**
- * @Author 李阳
- * @Date 2016/7/8
- * @fileName
+ * [login.js]
+ * @auth        liyang
+ * @anotherdate 2016-07-25
  */
 define(function() {
     var Login = {
@@ -10,10 +10,14 @@ define(function() {
             this.superSize();
             //显示隐藏验证码
             this.showOrHideCode();
-            //提交
-			this.loginSubmit();
+            //提交校验
+            this.checkSubmit();
             //回车提交
-			this.enterSubmit();
+            this.enterSubmit();
+            //更换验证码
+            this.checkCode();
+            //退出登录
+            //this.logout();
         },
         superSize: function() {
             $.supersized({
@@ -50,45 +54,95 @@ define(function() {
         },
         showOrHideCode: function() {
             //显示隐藏验证码
-            $("#hide").click(function() {
-                $(".code").fadeOut("slow");
+            $('#hide').click(function() {
+                $('.code').fadeOut('slow');
             });
-            $("#captcha").focus(function() {
-                $(".code").fadeIn("fast");
+            $('#captcha').focus(function() {
+                $('.code').fadeIn('fast');
             });
+        },
+        checkCode: function() {
+            $(".code-img").find("img").attr("src",URL.checkCodeUrl+"?t="+D.time());
+            $(".change").click(function(){
+                $(".code-img").find("img").attr("src",URL.checkCodeUrl+"?t="+D.time());
+            });
+        },
+        checkSubmit: function() {
+            var self = this;
+            $(".btn-submit").click(function(){
+
+            var user_name = $('#user_name').val();
+            var password = $('#password').val();
+            var captcha = $('#captcha').val();
+            if (user_name == "") {
+                $(".error").fadeIn("slow").html("请输入账号");
+                return true;
+            }
+            if (password == "") {
+                $(".error").fadeIn("slow").html("请输入密码");
+                return true;
+            }
+            if (captcha == "") {
+                $(".error").fadeIn("slow").html("请输入验证码");
+                return true;
+            }
+            var data = D.json_encode({"sys_user_login_name": user_name, "sys_user_login_pass": password, "code": captcha });
+            D.ajax(URL.loginUrl, data, function(res) {
+                if (C.SUCCESS_CODE == res.returnCode) {
+                   $.cookie("session_id",res.result.sessionId);
+                    var login_name = res.result.sessionUser.sysUserLoginName;
+                    $.cookie("login_name",login_name);
+                    self.loginSubmit();
+                } else {
+                    $(".error").fadeIn("slow").html(res.msg);
+                    $(".change").trigger("click");
+                }
+            })
+
+            })
+
+
         },
         loginSubmit: function() {
             //动画登录
-            $('.btn-submit').click(function() {
-                $('.input-username,dot-left').addClass('animated fadeOutRight')
-                $('.input-password-box,dot-right').addClass('animated fadeOutLeft')
-                $('.btn-submit').addClass('animated fadeOutUp')
-                setTimeout(function() {
-                        $('.avatar').addClass('avatar-top');
-                        $('.submit').hide();
-                        $('.submit2').html('<div class="progress progress-striped active"> <div class="progress-bar progress-bar-success" role="progressbar" data-transitiongoal="100"></div> </div>');
-                        $('.progress .progress-bar').progressbar({
-                            done: function() {
-								console.log("11111");
-							}
-                        });
-                    },
-                    300);
-
+            $('.input-username,dot-left').addClass('animated fadeOutRight');
+            $('.input-password-box,dot-right').addClass('animated fadeOutLeft');
+            $('.btn-submit').addClass('animated fadeOutUp');
+            setTimeout(function() {
+                    $('.avatar').addClass('avatar-top');
+                    $('.submit').hide();
+                    $('.submit2').html('<div class="progress progress-striped active"> <div class="progress-bar progress-bar-success" role="progressbar" data-transitiongoal="100"></div> </div>');
+                    $('.progress .progress-bar').progressbar({
+                        done: function() {
+                            $(".error").fadeOut("slow").html("");
+                            D.goto("main.html");
+                        }
+                    });
+                },
+                300);
+        },
+        enterSubmit: function() {
+            // 回车提交表单
+            var self = this;
+            $('#form_login').keydown(function(event) {
+                if (event.keyCode == 13) {
+                    self.checkSubmit();
+                }
             });
         },
-		enterSubmit:function () {
-			// 回车提交表单
-			$('#form_login').keydown(function(event){
-				var self = this;
-				if (event.keyCode == 13) {
-					self.loginSubmit();
-				}
-			});
+        logout:function(){
+           D.ajax(URL.logoutUrl, null, function(res) {
+                if (C.SUCCESS_CODE == res.returnCode) {
+                   $.removeCookie("session_id");
+                   $.removeCookie("login_name");
+                   Login.init();
+                }
+            })
+            
 
-		}
+        }
     }
-    require(['jquery', 'functions', 'supersized', 'progressbar'], function($, D) {
+    require(['jquery', 'functions', 'supersized','jquery.cookie','progressbar'], function($, D) {
         $(function() {
             var act = null;
             if (D.get('act')) {
@@ -96,7 +150,7 @@ define(function() {
             }
             /*控制*/
             switch (act) {
-                case "logout":
+                case 'logout':
                     Login.logout();
                     break;
                 default:

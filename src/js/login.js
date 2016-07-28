@@ -9,7 +9,7 @@ require(["common/config"],function(C){
     window.URL={
         mainUrl:C.ROOT_PATH,
         /*登录验证*/
-        checkUrl:C.API_PATH+"sys/login/tologin",
+        loginUrl:C.API_PATH+"sys/login/tologin",
         /*验证码图片*/
         checkCodeUrl:C.API_PATH+"sys/code",
         /*退出登录*/
