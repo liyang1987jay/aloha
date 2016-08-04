@@ -18,6 +18,8 @@ define(function() {
     };
     /*后台总权限控制api*/
     C.AUTH_API_PATH = C.API_PATH + "sys/login/checkAuth";
+    /*退出登录*/
+    C.LOGOUT_PATH = C.API_PATH + "sys/login/logout";
 
     window.C = C;
     return C;

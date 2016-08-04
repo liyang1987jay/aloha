@@ -1,20 +1,20 @@
 /**
  * 公用函数文件
  */
-define(function () {
+define(function() {
 
     window.D = {
         /*测试*/
-        test: function () {
+        test: function() {
             return "公用函数调用";
         },
         /*显示模版*/
-        display: function (id) {
+        display: function(id) {
             $(".hnHide").hide();
             $("#" + id).show();
         },
         /*ajax请求数据*/
-        ajax: function (api, data, callback) {
+        ajax: function(api, data, callback) {
             if (!C.DATA_METHOD) {
                 method = "GET";
             } else {
@@ -30,22 +30,24 @@ define(function () {
                     withCredentials: true
                 },
                 success: callback,
-                error: function () {
+                error: function() {
                     console.log("服务端无响应");
                 }
             });
         },
         /*当前时间*/
-        time: function () {
+        time: function() {
             return new Date().getTime();
         },
         /*拼接json*/
-        json_encode: function (json) {
+        json_encode: function(json) {
             return this.push_json(json);
         },
         /*拼接json，转成字符串*/
-        json_encode_str: function (json) {
-            var jsons = this.push_json({"md_key": C.DATA_KEY}, json);
+        json_encode_str: function(json) {
+            var jsons = this.push_json({
+                "md_key": C.DATA_KEY
+            }, json);
             var str = "";
             for (var key in jsons) {
                 str += "&" + key + "=" + jsons[key];
@@ -53,7 +55,7 @@ define(function () {
             return str;
         },
         /*合并json*/
-        push_json: function (des, src, override) {
+        push_json: function(des, src, override) {
             if (src instanceof Array) {
                 for (var i = 0, len = src.length; i < len; i++)
                     this.push_json(des, src[i], override);
@@ -66,30 +68,30 @@ define(function () {
             return des;
         },
         /*设置cookie*/
-        addcookie: function (name, value) {
+        addcookie: function(name, value) {
             var Days = 30;
             var exp = new Date();
             exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
             document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
         },
         /*获取cookie*/
-        getcookie: function (name) {
+        getcookie: function(name) {
             var strcookie = document.cookie;
             var arrcookie = strcookie.split("; ");
             for (var i = 0; i < arrcookie.length; i++) {
                 var arr = arrcookie[i].split("=");
-                if (arr[0] == name)return arr[1];
+                if (arr[0] == name) return arr[1];
             }
             return "";
         },
         /*删除cookie*/
-        delCookie: function (name) {
+        delCookie: function(name) {
             var date = new Date();
             date.setTime(date.getTime() - 10000);
             document.cookie = name + "=v;expires=" + date.toGMTString();
         },
         /*get*/
-        get: function (arg) {
+        get: function(arg) {
             var url = window.document.location.href.toString();
             var u = url.split("?");
             if (typeof(u[1]) == "string") {
@@ -104,18 +106,31 @@ define(function () {
                 return {};
             }
         },
+        getUrl: function(url, arg) {
+            var u = url.split("?");
+            if (typeof(u[1]) == "string") {
+                u = u[1].split("&");
+                var args = {};
+                for (var i in u) {
+                    var j = u[i].split("=");
+                    args[j[0]] = j[1];
+                }
+                return args[arg];
+            } else {
+                return {};
+            }
+        },
         /*跳转*/
-        goto: function (url) {
+        goto: function(url) {
             window.location.href = url;
         },
         /*url*/
-        url: function (str) {
+        url: function(str) {
             return C.ROOT_PATH + str;
         },
         /*用户信息*/
-        getUserInfo: function () {
-        },
-        utf16to8: function (str) {
+        getUserInfo: function() {},
+        utf16to8: function(str) {
             var out, i, len, c;
             out = "";
             len = str.length;
@@ -134,7 +149,7 @@ define(function () {
             }
             return out;
         },
-        utf8to16: function (str) {
+        utf8to16: function(str) {
             var out, i, len, c;
             var char2, char3;
             out = "";
@@ -171,7 +186,7 @@ define(function () {
             return out;
         },
         /*base编码*/
-        base64_encode: function (str) {
+        base64_encode: function(str) {
             var out, i, len, base64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
             var c1, c2, c3;
             len = str.length;
@@ -202,7 +217,7 @@ define(function () {
             return out;
         },
         /*base解析*/
-        base64_decode: function (str) {
+        base64_decode: function(str) {
             var c1, c2, c3, c4, base64DecodeChars = new Array(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1, -1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1);
             var i, len, out;
             len = str.length;
@@ -241,25 +256,25 @@ define(function () {
             return out;
         },
         /* 去处字符串空格*/
-        trim: function (str) {
+        trim: function(str) {
             str = str.replace(/\s+/g, "");
             return str;
         },
 
         /* 字符转整数*/
-        str2Num: function (str) {
+        str2Num: function(str) {
             var num = str - 0;
             return num;
         },
 
         /* 字符转FLOAT */
-        str2Float: function (str) {
+        str2Float: function(str) {
             var num = str.parseFloat();
             return num;
         },
 
         /* 数字格式化，将数字10000格式化成10,000的形式*/
-        number2str: function (number) {
+        number2str: function(number) {
             var temp_str = "";
             var point_str = "";
             var number_str = number.toString();
@@ -278,8 +293,7 @@ define(function () {
                 for (var i = 0; i < Math.floor(len / 3); i++) {
                     if (temp_str == "") {
                         temp_str += number_str.substring(model + i * 3, model + 3 + i * 3);
-                    }
-                    else {
+                    } else {
                         temp_str += "," + number_str.substring(model + i * 3, model + 3 + i * 3);
                     }
                 }
@@ -287,8 +301,7 @@ define(function () {
                     return temp_str;
                 else
                     return temp_str + "." + point_str;
-            }
-            else
+            } else
                 return number.toString();
 
         },
@@ -297,7 +310,7 @@ define(function () {
          * @param name
          * @returns
          */
-        getParam: function (name) {
+        getParam: function(name) {
             var search = document.location.search;
             var pattern = new RegExp("[?&]" + name + "\=([^&]+)", "g");
             var matcher = pattern.exec(search);
@@ -316,7 +329,7 @@ define(function () {
             return items;
         },
         //减法函数
-        Subtr: function (arg1, arg2) {
+        Subtr: function(arg1, arg2) {
             var r1, r2, m, n;
             try {
                 r1 = arg1.toString().split(".")[1].length;
@@ -336,35 +349,31 @@ define(function () {
         },
 
         //乘法函数
-        accMul: function (arg1, arg2) {
+        accMul: function(arg1, arg2) {
             var m = 0,
                 s1 = arg1.toString(),
                 s2 = arg2.toString();
             try {
                 m += s1.split(".")[1].length;
-            } catch (e) {
-            }
+            } catch (e) {}
             try {
                 m += s2.split(".")[1].length;
-            } catch (e) {
-            }
+            } catch (e) {}
             return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m);
         },
 
         //除法函数
-        accDiv: function (arg1, arg2) {
+        accDiv: function(arg1, arg2) {
             var t1 = 0,
                 t2 = 0,
                 r1, r2;
             try {
                 t1 = arg1.toString().split(".")[1].length;
-            } catch (e) {
-            }
+            } catch (e) {}
             try {
                 t2 = arg2.toString().split(".")[1].length;
-            } catch (e) {
-            }
-            with (Math) {
+            } catch (e) {}
+            with(Math) {
                 r1 = Number(arg1.toString().replace(".", ""));
                 r2 = Number(arg2.toString().replace(".", ""));
                 return (r1 / r2) * pow(10, t2 - t1);
@@ -372,14 +381,14 @@ define(function () {
         },
 
         /* 将数字10,000格式化成10000的形式*/
-        str2number: function (number_str) {
+        str2number: function(number_str) {
             var temp_str = number_str.replaceAll(',', '');
             return new Number(temp_str);
         },
 
         /* 将数字10000.11111格式化成10,000.1111的形式*/
         /* num：待格式化数字    decimalNum：四舍五入保留小数的位数   bolCommas：整数部分是否要三位用“,”分割*/
-        number2string: function (num, decimalNum, bolCommas) {
+        number2string: function(num, decimalNum, bolCommas) {
             if (isNaN(parseInt(num)))
                 return "NaN";
 
@@ -412,7 +421,7 @@ define(function () {
         /**
          * 判断开始日期是否大于结束日期 日期格式 yyyy-mm-dd
          */
-        checkDate: function (beginDate, endDate) {
+        checkDate: function(beginDate, endDate) {
 
             var isSuccess = false;
             var beginYear = str2Num(beginDate.substring(0, 4));
@@ -439,7 +448,7 @@ define(function () {
          * 判断结束日期是否超过开始日期的多少天 由参数传入 日期格式 yyyy-mm-dd
          * 返回true 结束日期超过开始日期day天，false:没有超过
          */
-        checkDateIsPassDay: function (beginDate, endDate, day) {
+        checkDateIsPassDay: function(beginDate, endDate, day) {
             var checkFlag = false;
             var tmpBeginDate = new Date(beginDate.replace(/\-/i, "V"));
             var tmpEndDate = new Date(endDate.replace(/\-/i, "V"));
@@ -456,7 +465,7 @@ define(function () {
          * @param len 长度
          * @returns {String}
          */
-        formatNewLine: function (oldStr, len) {
+        formatNewLine: function(oldStr, len) {
             var temp = "";
             if (oldStr != null && oldStr.length > len) {
 
@@ -478,14 +487,14 @@ define(function () {
         /**
          * JS的ReplaceAll方法
          */
-        replaceAll: function (s1, s2) {
+        replaceAll: function(s1, s2) {
             return this.replace(new RegExp(s1, "gm"), s2);
         },
 
         /**
          * 清空dom
          */
-        clearDom: function (parentDom) {
+        clearDom: function(parentDom) {
             var childDomArray = [];
             childDomArray = parentDom.childNodes;
             var childDomArrayLength = (childDomArray.length)
@@ -495,7 +504,7 @@ define(function () {
         },
 
         /* 处理浏览器特殊字符*/
-        swapParameter: function (swapData) {
+        swapParameter: function(swapData) {
             if (swapData == null)
                 return null;
 
@@ -515,7 +524,7 @@ define(function () {
         },
 
         /* 处理浏览器特殊字符*/
-        unSwapParameter: function (swapData) {
+        unSwapParameter: function(swapData) {
             if (swapData == null)
                 return null;
 
@@ -537,19 +546,19 @@ define(function () {
          *获取当前时间的秒数
          * @returns
          */
-        getCurrentTimeSeconds: function () {
+        getCurrentTimeSeconds: function() {
             // 获取当前时间表示的秒数
             var d = new Date();
             var hour = d.getHours();
             var minute = d.getMinutes();
-            second : d.getSeconds();
+            second: d.getSeconds();
             return hour * 60 * 60 + minute * 60 + second;
         },
 
         /*
          * 日期格式化
          */
-        getCurrentTimeSeconds: function (formatter) {
+        getCurrentTimeSeconds: function(formatter) {
             if (!formatter || formatter == "") {
                 formatter = "yyyy-MM-dd";
             }
@@ -577,7 +586,7 @@ define(function () {
 
         /** **********************表单数据验证******************** */
         // 校验手机号
-        checkPhone: function (value) {
+        checkPhone: function(value) {
             if (/^13\d{9}$/g.test(value) || (/^15[0-35-9]\d{8}$/g.test(value)) || (/^18[05-9]\d{8}$/g.test(value))) {
                 return true;
             } else {
@@ -586,7 +595,7 @@ define(function () {
         },
 
         // 校验邮箱
-        checkMail: function (value) {
+        checkMail: function(value) {
             var email = /^[a-zA-Z0-9_\.\-]{1,}@[a-zA-Z0-9_\-]{1,}\.[a-zA-Z0-9_\-.]{1,}$/;
             var emailYM = /^[*]{1,}@[a-zA-Z0-9_\-]{1,}\.[a-zA-Z0-9_\-.]{1,}$/;
             if (email.exec(value) == null && emailYM.exec(value) == null) {
@@ -597,7 +606,7 @@ define(function () {
         },
 
         // 校验普通电话、传真号码：可含有特殊字符
-        checkTel: function (value) {
+        checkTel: function(value) {
             //120803-验证电话号码和传真号必须以数字开头
             if (/^[0-9]/.test(value) == false) {
                 return false;
@@ -611,16 +620,16 @@ define(function () {
         },
 
         // 字段字数的判断
-        checkLength: function (inputText, length) {
+        checkLength: function(inputText, length) {
             var totalLength = 0;
             var buffer;
 
             for (var i = 0; i < inputText.length; i++) {
                 buffer = inputText.substr(i, 1, 1);
                 if (/[^\x00-\xff]/g.test(buffer)) {
-                    totalLength += 2;  // 中文字符
+                    totalLength += 2; // 中文字符
                 } else {
-                    totalLength += 1;  // 其他 1
+                    totalLength += 1; // 其他 1
                 }
             }
             if (totalLength > length) {
@@ -634,7 +643,7 @@ define(function () {
          * 校验字符串是否为整型 返回值： 如果为空，定义校验不通过则返回false 如果字串全部为数字，校验通过，返回true 如果校验不通过则
          * 返回false 参考提示信息：输入域必须为数字
          */
-        checkIsNumber: function (str) {
+        checkIsNumber: function(str) {
             // 如果为空，则不通过校验
             if (str == "") return false;
             if (/^(-|\+)?\d+$/.test(str)) return true;
@@ -645,7 +654,7 @@ define(function () {
          * 校验字符串是否为整型 返回值： 如果为空，定义校验不通过 返回false 如果字串全部为数字切不为0，校验通过，返回true 如果校验不通过
          * 返回false 参考提示信息：输入域必须为数字和非零！
          */
-        checkIsNumberAndNoZore: function (str) {
+        checkIsNumberAndNoZore: function(str) {
             // 如果为空，则通过校验
             if (str == "") return false;
             if (/^(-|\+)?\d+$/.test(str) && /^(0|[1-9][0-9]*)$/.test(str)) return true;
@@ -655,7 +664,7 @@ define(function () {
         /**
          * 校验日期格式 日期格式：MMDDYY
          */
-        checkIsDateString: function (sDate) {
+        checkIsDateString: function(sDate) {
             var iaMonthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
             var iaDate = new Array(3)
             var year, month, day
@@ -679,7 +688,7 @@ define(function () {
          * @param sDate
          * @returns {Boolean}
          */
-        checkIsDateStr: function (sDate) {
+        checkIsDateStr: function(sDate) {
             var iaMonthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
             var iaDate = new Array(3)
             var year, month, day
@@ -691,9 +700,9 @@ define(function () {
             if (!checkIsNumber(month) || !checkIsNumber(day) || !checkIsNumber(year)) return false
 
             //year = parseInt(year)+2000;
-            if (sDate.length != 10)return false
-            if (sign1 != "-")return false
-            if (sign2 != "-")return false
+            if (sDate.length != 10) return false
+            if (sign1 != "-") return false
+            if (sign2 != "-") return false
             if (year < 1000 || year > 9999) return false
             if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)) iaMonthDays[1] = 29;
             if (month < 1 || month > 12) return false
@@ -706,9 +715,9 @@ define(function () {
          * 校验是否全部为英文字母
          * @param str
          */
-        checkIsChar: function (str) {
-            if (str == "")return false;
-            if (!/[^a-zA-Z]/.exec(str))return true;
+        checkIsChar: function(str) {
+            if (str == "") return false;
+            if (!/[^a-zA-Z]/.exec(str)) return true;
             else return false;
         },
 
@@ -717,9 +726,9 @@ define(function () {
          * 校验验证码格式
          * 4个字符区分大小写，可由英文字母，数字自由组合，区分大小写；
          */
-        checkVercode: function (str) {
-            var regExp = /[^a-zA-Z0-9]/g;//可由英文字母，数字自由组合，区分大小写
-            if (str.length == 4) {//校验验证码规则：4个字符
+        checkVercode: function(str) {
+            var regExp = /[^a-zA-Z0-9]/g; //可由英文字母，数字自由组合，区分大小写
+            if (str.length == 4) { //校验验证码规则：4个字符
                 if (str.match(regExp) != null) {
                     return false;
                 } else {
@@ -733,27 +742,27 @@ define(function () {
          * 校验是否均为数字和英文字符
          * @param str
          */
-        checkNumOrChar: function (str) {
-            if (str == "")return false;
-            if (!/[^a-zA-Z0-9]/.exec(str))return true;
+        checkNumOrChar: function(str) {
+            if (str == "") return false;
+            if (!/[^a-zA-Z0-9]/.exec(str)) return true;
             else return false;
         },
 
         /**
          * 校验是否均为数字和英文字母和-
          */
-        checkNumOrCharOrPartLine: function (str) {
-            if (str == "")return false;
-            if (!/[^a-zA-Z0-9\-]/.exec(str))return true;
+        checkNumOrCharOrPartLine: function(str) {
+            if (str == "") return false;
+            if (!/[^a-zA-Z0-9\-]/.exec(str)) return true;
             else return false;
         },
 
         /**
          * 校验是否均为数字和英文字母和-
          */
-        checkNumOrPartLine: function (str) {
-            if (str == "")return false;
-            if (!/[^0-9\-]/.exec(str))return true;
+        checkNumOrPartLine: function(str) {
+            if (str == "") return false;
+            if (!/[^0-9\-]/.exec(str)) return true;
             else return false;
         },
 
@@ -762,7 +771,7 @@ define(function () {
          * @param str
          * @returns {Boolean}
          */
-        checkRetCode: function (str) {
+        checkRetCode: function(str) {
             if (null != str && str.indexOf("E-") == 0) {
                 return true;
             }
@@ -770,12 +779,12 @@ define(function () {
         },
 
         //检验字符串是否符合日时分格式：00,00:00
-        checkHourAndSeconds: function (str) {
+        checkHourAndSeconds: function(str) {
             return /^(([0-1]?[0-9])||(2[0-3])):([0-5][0-9])$/.test(str);
         },
 
         //检验字符串是否符合日时分格式：00,00:00
-        checkDayAndHourAndSeconds: function (str) {
+        checkDayAndHourAndSeconds: function(str) {
             return /^([0-2]?[0-9]),(([0-1]?[0-9])||(2[0-3])):([0-5][0-9])$/.test(str);
         },
 
@@ -783,7 +792,7 @@ define(function () {
          * 检查是否大于最大值
          * @return
          */
-        checkGtMaxValue: function (value, maxValue) {
+        checkGtMaxValue: function(value, maxValue) {
             if (value <= maxValue) {
                 return true;
             } else {
@@ -796,7 +805,7 @@ define(function () {
          * @param sDate2 格式为 yyyy-mm-dd
          * @return 相差多少天
          */
-        dateDiff: function (sDate1, sDate2) {
+        dateDiff: function(sDate1, sDate2) {
             //alert(sDate1);
             //sDate1和sDate2的格式为xxxx-xx-xx
             var oDate1, oDate2, iDays;
@@ -827,7 +836,7 @@ define(function () {
          * @param number 元
          * @return 万元
          */
-        convertYen2Million: function (number) {
+        convertYen2Million: function(number) {
             var million = 0.00;
             if (number) {
                 million = number / 10000;
@@ -835,42 +844,6 @@ define(function () {
             }
             return million;
         }
-        /*
-         * 为低版本IE添加placeholder效果
-         *
-         * 使用范例：
-         * [html]
-         * <input id="captcha" name="captcha" type="text" placeholder="验证码" value="" >
-         * [javascrpt]
-         * $("#captcha").nc_placeholder();
-         *
-         * 生效后提交表单时，placeholder的内容会被提交到服务器，提交前需要把值清空
-         * 范例：
-         * $('[data-placeholder="placeholder"]').val("");
-         * $("#form").submit();
-         *
-         */
-        /*(function($) {
-         $.fn.aloha_placeholder = function() {
-         var isPlaceholder = 'placeholder' in document.createElement('input');
-         return this.each(function() {
-         if(!isPlaceholder) {
-         $el = $(this);
-         $el.focus(function() {
-         if($el.attr("placeholder") === $el.val()) {
-         $el.val("");
-         $el.attr("data-placeholder", "");
-         }
-         }).blur(function() {
-         if($el.val() === "") {
-         $el.val($el.attr("placeholder"));
-         $el.attr("data-placeholder", "placeholder");
-         }
-         }).blur();
-         }
-         });
-         };
-         })(jQuery)*/
     };
     return D;
 });

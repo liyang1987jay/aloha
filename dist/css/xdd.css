@@ -5,6 +5,11 @@
     list-style: none;
     text-decoration: none;
 }
+html,body{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
 body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, fieldset, lengend, button, input, textarea, th, td {
     margin: 0;
     padding: 0
@@ -222,14 +227,14 @@ img {
     border-right: dotted 1px #FFF;
     position: absolute;
     z-index: 9;
-    top: 10px;
+    top: 12px;
     left: 10px;
 }
 input {
     font-size: 14px;
     font-family: "Microsoft YaHei", "Lucida Grande", "Lucida Sans Unicode", Tahoma, Helvetica, Arial, sans-serif;
     color: #fff;
-    height: 28px;
+    height: 40px;
     padding: 5px 6px;
     position: relative;
     z-index: 1;
@@ -595,17 +600,17 @@ input:focus {
 
 /*header start*/
 .header {
-    position: fixed;
+    /*position: fixed;
     left: 0;
-    right: 0;
+    right: 0;*/
     z-index: 1002;
     height: 50px; 
     background:#33373b;
     padding: 0 15px;
 }
-a.logo{
+/* a.logo{
     margin-top:6px;
-}
+} */
 a.logo span{
     font-size: 14px;
     color:#fff;
@@ -635,7 +640,7 @@ a.logo span{
     background-color: #1a1d1f;
 }
 .right-nav>ul>li{
-    height: 50px;
+    height:44px;
     width: 50px;
     text-align: center;
     float: left;
@@ -647,10 +652,35 @@ a.logo span{
     line-height: 36px;
 }
 .right-nav>ul>li .number{
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 14px;
+    color: #FFF;
+    background-color: #F30;
+    text-align: center;
+    display: block;
+    min-width: 10px;
+    height: 14px;
+    padding: 0 2px;
+    border: solid 2px #FFF;
+    border-radius: 9px;
     position: absolute;
-    top:10px;
-    left:35px;
-    color: #fff;
+    z-index: 1;
+    top: 2px;
+    right: 1px;
+    -webkit-animation: twinkling 1s infinite ease-in-out;
+}
+@-webkit-keyframes 'twinkling' {
+    /*透明度由0到1*/
+    0% {
+        opacity: 0;
+        /*透明度为0*/
+    }
+
+    100% {
+        opacity: 1;
+        /*透明度为1*/
+    }
 }
 .right-nav .username {
     font-size: 13px;
@@ -676,22 +706,28 @@ a.logo span{
 /*header over*/
 .content{
     width:100%;
-    height: 1076px;
+    height:100%;
     overflow: hidden;
-    padding-top: 50px;
+    /*padding-top: 50px;*/
+}
+.wraper{
+    height: 100%;
+}
+.wraper>.content>.left{
+    height: 100%;
 }
 /*left-nav*/
-
+/*改动的************************************************************/
 .left-nav{
     background-color: #303030;
-    height: 1076px;
-    overflow: hidden;
+    height:100%;
+    position: relative;
 }
 .left-nav>ul>li{
     width: 70px;
     height: 70px;
     text-align: center;
-    position: relative;
+   /* position: relative;*/
     padding-top: 10px;
 }
 .left-nav>ul>li i{
@@ -715,17 +751,17 @@ a.logo span{
     display: block;
 }
 .mid-nav{
-    height: 1076px;
+    height:100%;
     overflow: hidden;
     width:142px;
     background-color: #e5e5e5;
+    position: absolute;
+    top: 0;
+    left: 70px;
 }
-/*.mid-nav>ul{
-    display: none;
+.mid-nav{
+     display: none;
 }
-.mid-nav>ul.active{
-    display: block;
-}*/
 .mid-nav>ul>li{
     height: 37px;
     line-height: 37px;
@@ -739,19 +775,21 @@ a.logo span{
 .mid-nav>ul>li.active{
     background-color: #fff;
 }
-/*.mid-nav>ul>li:hover{
-    background-color: #fff;
-}*/
+.left-tabs{
+    display: none;
+}
 /*left-nav*/
 /*right*/
 .right{
-    width: 1390px;
     overflow: hidden;
     background-color: #fff;
     padding: 10px;
+    margin-left: 213px;
+    height: 100%
 }
+/*改动的***************************************************************************8*/
 .right>ul>li{
-    width:1390px;
+    width:100%;
     overflow: hidden;
 }
 .right>ul>li.active{

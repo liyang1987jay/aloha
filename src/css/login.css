@@ -90,14 +90,14 @@
     border-right: dotted 1px #FFF;
     position: absolute;
     z-index: 9;
-    top: 10px;
+    top: 12px;
     left: 10px;
 }
 input {
     font-size: 14px;
     font-family: "Microsoft YaHei", "Lucida Grande", "Lucida Sans Unicode", Tahoma, Helvetica, Arial, sans-serif;
     color: #fff;
-    height: 28px;
+    height: 40px;
     padding: 5px 6px;
     position: relative;
     z-index: 1;

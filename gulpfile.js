@@ -145,16 +145,17 @@ gulp.task('images', function() {
         })
     })
     // 静态服务器
-gulp.task('server', ['less', 'scripts', 'fileinclude', 'images'], function() {
+gulp.task('server', ['css', 'scripts', 'fileinclude', 'images','jsModules'], function() {
     browserSync.init({
         server: {
             baseDir: './dist'
         }
     });
-    gulp.watch(srcPath.less).on('change', reload);
+    gulp.watch(srcPath.css).on('change', reload);
     gulp.watch(srcPath.html).on('change', reload);
     gulp.watch(srcPath.js).on('change', reload);
     gulp.watch(srcPath.images).on('change', reload);
+    gulp.watch(srcPath.jsModule).on('change', reload);
 });
 
 gulp.task('watch', function() {

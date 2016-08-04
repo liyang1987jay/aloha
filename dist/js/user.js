@@ -1,0 +1,1 @@
+require(["common/config"],function(e){window.URL={getUserListUrl:e.API_PATH+"api/sys/user/getAll"},window.C=e,require(["modules/user"])});

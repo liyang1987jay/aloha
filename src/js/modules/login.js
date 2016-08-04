@@ -62,42 +62,47 @@ define(function() {
             });
         },
         checkCode: function() {
-            $(".code-img").find("img").attr("src",URL.checkCodeUrl+"?t="+D.time());
-            $(".change").click(function(){
-                $(".code-img").find("img").attr("src",URL.checkCodeUrl+"?t="+D.time());
+            $(".code-img").find("img").attr("src", URL.checkCodeUrl + "?t=" + D.time());
+            $(".change").click(function() {
+                $(".code-img").find("img").attr("src", URL.checkCodeUrl + "?t=" + D.time());
             });
         },
         checkSubmit: function() {
             var self = this;
-            $(".btn-submit").click(function(){
+            $(".btn-submit").click(function() {
 
-            var user_name = $('#user_name').val();
-            var password = $('#password').val();
-            var captcha = $('#captcha').val();
-            if (user_name == "") {
-                $(".error").fadeIn("slow").html("请输入账号");
-                return true;
-            }
-            if (password == "") {
-                $(".error").fadeIn("slow").html("请输入密码");
-                return true;
-            }
-            if (captcha == "") {
-                $(".error").fadeIn("slow").html("请输入验证码");
-                return true;
-            }
-            var data = D.json_encode({"sys_user_login_name": user_name, "sys_user_login_pass": password, "code": captcha });
-            D.ajax(URL.loginUrl, data, function(res) {
-                if (C.SUCCESS_CODE == res.returnCode) {
-                   $.cookie("session_id",res.result.sessionId);
-                    var login_name = res.result.sessionUser.sysUserLoginName;
-                    $.cookie("login_name",login_name);
-                    self.loginSubmit();
-                } else {
-                    $(".error").fadeIn("slow").html(res.msg);
-                    $(".change").trigger("click");
+                var user_name = $('#user_name').val();
+                var password = $('#password').val();
+                var captcha = $('#captcha').val();
+                if (user_name == "") {
+                    $(".error").fadeIn("slow").html("请输入账号");
+                    return true;
                 }
-            })
+                if (password == "") {
+                    $(".error").fadeIn("slow").html("请输入密码");
+                    return true;
+                }
+                if (captcha == "") {
+                    $(".error").fadeIn("slow").html("请输入验证码");
+                    return true;
+                }
+                var data = D.json_encode({
+                    "sys_user_login_name": user_name,
+                    "sys_user_login_pass": password,
+                    "code": captcha
+                });
+                D.ajax(URL.loginUrl, data, function(res) {
+                    if (C.SUCCESS_CODE == res.returnCode) {
+                        $.cookie("sessionId", res.result.sessionId);
+                        var sessionUser =$.parseJSON(res.result.sessionUser);
+                        var login_name = sessionUser.sysUserLoginName;
+                        $.cookie("loginName",login_name );
+                        self.loginSubmit();
+                    } else {
+                        $(".error").fadeIn("slow").html(res.msg);
+                        $(".change").trigger("click");
+                    }
+                })
 
             })
 
@@ -123,31 +128,30 @@ define(function() {
         },
         enterSubmit: function() {
             // 回车提交表单
-            var self = this;
-            $('#form_login').keydown(function(event) {
+            $(document).keyup(function(event) {
                 if (event.keyCode == 13) {
-                    self.checkSubmit();
+                     $(".btn-submit").trigger("click");
                 }
             });
         },
-        logout:function(){
-           D.ajax(URL.logoutUrl, null, function(res) {
+        logout: function() {
+            D.ajax(URL.logoutUrl, null, function(res) {
+                console.log(res);
                 if (C.SUCCESS_CODE == res.returnCode) {
-                   $.removeCookie("session_id");
-                   $.removeCookie("login_name");
-                   Login.init();
+                    $.removeCookie("sessionId");
+                    $.removeCookie("loginName");
+                    Login.init();
                 }
             })
-            
+
 
         }
     }
-    require(['jquery', 'functions', 'supersized','jquery.cookie','progressbar'], function($, D) {
+    require(['jquery', 'functions', 'supersized', 'jquery.cookie', 'progressbar'], function($, D) {
         $(function() {
-            var act = null;
-            if (D.get('act')) {
-                act = D.get('act');
-            }
+            var url = window.document.location.href.toString();
+            var u = url.split("#");
+            var act =  u[1];
             /*控制*/
             switch (act) {
                 case 'logout':

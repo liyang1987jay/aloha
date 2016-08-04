@@ -1,115 +1,113 @@
 @@include('./inc/header.html',{"title":"校东东后台管理系统"})
-<div class="container">
-	<!-- header start -->
-	<header class="header">
-		<!-- logo start -->
-		<a href="area-manage.html" class="logo fl">
-			<img src="images/logo.png" class="fl">
-			<span class="fl">后台管理</span>
-		</a>
-		<!-- logo over -->
-		<!--  顶部左侧导航-->
-		<div class="header-nav fl">
-			<ul>
-				<li class="active">
-					<a href="area-manage.html">平台管理</a>
-				</li>
-				<li>
-					<a href="classify-manage.html">商城管理</a>
-				</li>
-				<li>
-					<a href="news-manage.html">资讯管理</a>
-				</li>
-			</ul>
-		</div>
-		<!--  顶部左侧导航-->
-		<!--  顶部右侧导航-->
-		<div class="right-nav fr">
-			<ul>
-				<li style="border-right:1px solid #5c5f61;width:140px;">
-					<a href="#">
-						<div class="fl">
-							<span class="username">admin</span>
-							<span class="username">超级管理员</span>
-						</div>
+<div class="wraper">
+        <!-- header start -->
+        <header class="header">
+            <!-- logo start -->
+            <a href="javascript:;" class="logo fl">
+                <img src="images/logo.png" class="fl">
+                <span class="fl">后台管理</span>
+            </a>
+            <!-- logo over -->
+            <!--  顶部左侧导航-->
+            <div class="header-nav fl aloha-module-menu">
+                <ul id="topModuleMenu">
+                    <script id="topModuleMenuTpl" type="text/x-handlebars-template">
+                        {{#each this}}
+                        <li data-param="{{sysMenuCode}}">
+                            <a href="javascript:;">{{sysMenuName}}</a>
+                        </li>
+                        {{/each}}
+                    </script>
+                </ul>
+            </div>
+            <!--  顶部左侧导航-->
+            <!--  顶部右侧导航-->
+            <div class="right-nav fr">
+                <ul>
+                    <li style="border-right:1px solid #5c5f61;width:140px;">
+                        <a href="javascript:;">
+                            <div class="fl">
+                                <span class="username" id="loginName"></span>
+                            </div>
                             <span class="pic1 fl">
                                 <img alt="" src="images/user.jpg">
                             </span>
-					</a>
-				</li>
-				<li style="position: relative;">
-					<a  href="#">
-						<i class="icon-bell"></i>
-						<span class="number">6</span>
-					</a>
-				</li>
-				<li>
-					<a  href="#">
-						<i class="icon-switch"></i>
-					</a>
-				</li>
-			</ul>
-		</div>
-		<!--  顶部右侧导航-->
-	</header>
-	<!-- header over -->
-	<!-- content start-->
-	<div class="content">
-		<div class="left fl">
-			<!-- 左侧导航 -->
-			<div class="left-nav">
-				<ul>
-					<li class="active">
-						<a href="area-manage.html">
-							<i class="icon-set"></i>
-							<p>系统</p>
-						</a>
-						<i class="icon-left"></i>
-					</li>
-					<li>
-						<a href="user-manage.html">
-							<i class="icon-lock"></i>
-							<p>权限</p>
-						</a>
-						<i class="icon-left"></i>
-					</li>
-				</ul>
-			</div>
-			<!-- 左侧导航 -->
-		</div>
-		<div class="mid fl">
-			<!-- 中间导航 -->
-			<div class="mid-nav">
-				<ul>
-					<li class="active">
-						<a href="area-manage.html">区域管理</a>
-					</li>
-					<li>
-						<a href="invoice-manage.html">发票管理</a>
-					</li>
-					<li>
-						<a href="pay-manage.html">支付方式管理</a>
-					</li>
-					<li>
-						<a href="clear.html">清除缓存</a>
-					</li>
-					<li>
-						<a href="log-manage.html">日志管理</a>
-					</li>
-					<li>
-						<a href="password-manage.html">密码修改</a>
-					</li>
-				</ul>
-			</div>
-			<!-- 中间导航 -->
-		</div>
-		<!-- 右侧区域 -->
-		<div class="right">
-			<iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="area-manage.html" frameborder="0" ></iframe>
-		</div>
-		<!-- 右侧区域 -->
-	</div>
-	<!-- content over-->
-</div>
+                        </a>
+                    </li>
+                    <li style="position: relative;">
+                        <a href="javascript:;" title="查看待处理事项">
+                            <i class="icon-bell"></i>
+                            <span class="number">6</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="login.html#logout" title="安全退出管理中心">
+                            <i class="icon-switch"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!--  顶部右侧导航-->
+        </header>
+        <!-- header over -->
+        <!-- content start-->
+        <div class="content">
+            <div class="left fl">
+                <!-- 左侧导航 -->
+                <div class="left-nav lefModuleMenu" id="lefModuleMenu">
+                 <script id="lefModuleMenuTpl" type="text/x-handlebars-template">
+                        {{#each this}}
+                         <ul id="admincpNavTabs_{{parentCode}}" class="left-tabs">
+                         {{#each menuList}}
+                        <li class="second">
+                            <a href="javascript:;" class="left-nav-tab">
+                                <i class="{{sysMenuClass}}"></i>
+                                <p>{{sysMenuName}}</p>
+                            </a>
+                            <!--  <i class="icon-left"></i> -->
+                            <!-- 中间导航 -->
+                            <div class="mid-nav">
+                                <ul>
+                                {{#each childMenuList}}
+                                    <li class="third">
+                                        <a href="javascript:;" url-param="{{sysMenuUrl}}">{{sysMenuName}}</a>
+                                    </li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                            <!-- 中间导航 -->
+                        </li>
+                        {{/each}}
+                    </ul>
+                        {{/each}}
+                    </script>
+                </div>
+                <!-- 左侧导航 -->
+            </div>
+            <!-- 右侧区域 -->
+            <div class="right">
+                <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="welcome.html" frameborder="0"></iframe>
+            </div>
+            <!-- 右侧区域 -->
+            <div class="modal fade" id="mainModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel"></h4>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+        </div>
+        <!-- content over-->
+    </div>
 @@include('./inc/footer.html')
 <script src="js/main.js"></script>
